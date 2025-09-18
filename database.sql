@@ -6,7 +6,8 @@ CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    role ENUM('Admin','Staff') DEFAULT 'Staff'
+    role ENUM('Admin','Staff') DEFAULT 'Staff',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tasks table
@@ -17,6 +18,7 @@ CREATE TABLE tasks (
     assigned_to INT,
     status ENUM('Pending','In Progress','Completed') DEFAULT 'Pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    due_date DATE,
     FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL
 );
 
@@ -57,3 +59,4 @@ CREATE TABLE notifications (
 -- Insert sample admin (password = admin123)
 INSERT INTO users (username, password, role) 
 VALUES ('admin', MD5('admin123'), 'Admin');
+
